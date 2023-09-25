@@ -3,6 +3,7 @@ package org.example.labtwo.behavior;
 import org.example.labtwo.models.Faculty;
 import org.example.labtwo.models.University;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -21,25 +22,43 @@ public class ApplicationLoop {
         String command = "djsoadsa";
 
         while (!Objects.equals(command, "q")) {
-            System.out.print("your command: ");
-            command = scanner.nextLine();
-            System.out.println(command);
+            command = this.takeUserInput();
+            String[] commandList = command.split("/");
 
-            if (Objects.equals(command, "f")) {
-                System.out.println("name: ");
-                String nameOfFaculty = scanner.nextLine();
-                System.out.println("abbrev: ");
-                String abbrevOfFaculty = scanner.nextLine();
-                System.out.println("field: ");
-                String fieldOfFaculty = scanner.nextLine();
-
-                Faculty faculty = new Faculty(nameOfFaculty, abbrevOfFaculty, fieldOfFaculty);
-                this.university.addFaculty(faculty);
-            } else if (command.equals("pf")) {
-                System.out.println(this.university);
+            switch (commandList[0]) {
+                case "f":
+                    this.addFaculty();
+                    break;
+                case "pf":
+                    this.printFaculties();
+                default:
+                    System.out.println("Invalid command");
             }
         }
 
+        System.out.println("Exiting program");
+
         scanner.close();
+    }
+
+    private String takeUserInput() {
+        System.out.print("prompt> ");
+        return this.scanner.nextLine();
+    }
+
+    private void printFaculties() {
+        System.out.println(this.university);
+    }
+
+    private void addFaculty() {
+        System.out.println("name: ");
+        String nameOfFaculty = scanner.nextLine();
+        System.out.println("abbrev: ");
+        String abbrevOfFaculty = scanner.nextLine();
+        System.out.println("field: ");
+        String fieldOfFaculty = scanner.nextLine();
+
+        Faculty faculty = new Faculty(nameOfFaculty, abbrevOfFaculty, fieldOfFaculty);
+        this.university.addFaculty(faculty);
     }
 }
